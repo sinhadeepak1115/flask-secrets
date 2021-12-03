@@ -1,6 +1,13 @@
 from flask import Flask, render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField ,SubmitField
 
+class LoginForm(FlaskForm):
+    email = StringField(label='Email')
+    password = PasswordField(label='Password')
+    submit = SubmitField(label='Log In')
 app = Flask(__name__)
+app.secret_key = "deepak"
 
 
 @app.route("/")
@@ -9,7 +16,8 @@ def home():
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    login_form = LoginForm()
+    return render_template("login.html", form=login_form)
 
 
 if __name__ == '__main__':
